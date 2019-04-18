@@ -1,0 +1,7 @@
+steps:
+- name: gcr.io/cloud-builders/docker
+  args: ['build', '-t', 'eu.gcr.io/$PROJECT_ID/cloud-run-react:${SHORT_SHA}', '.']
+- name: 'gcr.io/cloud-builders/docker'
+  args: ["push", "eu.gcr.io/$PROJECT_ID/cloud-run-react"]
+- name: 'gcr.io/cloud-builders/gcloud'
+  args: ['beta', 'run', 'deploy', 'cloud-run-react', '--image', 'eu.gcr.io/$PROJECT_ID/cloud-run-react:${SHORT_SHA}', '--region', 'us-central1']
